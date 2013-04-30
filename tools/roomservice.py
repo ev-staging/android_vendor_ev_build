@@ -1,10 +1,44 @@
 #!/usr/bin/env python
+# Copyright (C) 2012-2013, The CyanogenMod Project
+#           (C) 2017,      The LineageOS Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+from __future__ import print_function
+
+import base64
 import os
-import sys
-import urllib2
 import json
+import netrc
+import os
 import re
-import netrc, base64
+import sys
+
+try:
+  # For python3
+  import urllib.error
+  import urllib.parse
+  import urllib.request
+except ImportError:
+  # For python2
+  import imp
+  import urllib2
+  import urlparse
+  urllib = imp.new_module('urllib')
+  urllib.error = urllib2
+  urllib.parse = urlparse
+  urllib.request = urllib2
+
 from xml.etree import ElementTree
 
 product = sys.argv[1];
@@ -24,7 +58,7 @@ except:
     device = product
 
 if not depsonly:
-    print "Device %s not found. Attempting to retrieve device repository from Evervolv Github (http://github.com/Evervolv)." % device
+    print ("Device %s not found. Attempting to retrieve device repository from Evervolv Github (http://github.com/Evervolv)." % device)
 
 try: # Convert from depreciated format
     if not os.path.isdir(local_manifests_dir):
@@ -32,7 +66,7 @@ try: # Convert from depreciated format
     if os.path.exists(".repo/local_manifest.xml"):
         os.rename(".repo/local_manifest.xml", os.path.join(local_manifests_dir, "deprecated_manifest.xml"))
 except OSError as e:
-    print "Fatal: %s" % e
+    print("Fatal: %s" % e)
     sys.exit()
 
 # list the currently existing manifests
@@ -54,9 +88,9 @@ def add_auth(githubreq):
 
 page = 1
 while not depsonly:
-    githubreq = urllib2.Request("https://api.github.com/users/Evervolv/repos?per_page=100&page=%d" % page)
+    githubreq = urllib.request.Request("https://api.github.com/users/Evervolv/repos?per_page=100&page=%d" % page)
     add_auth(githubreq)
-    result = json.loads(urllib2.urlopen(githubreq).read())
+    result = json.loads(urllib.request.urlopen(githubreq).read().decode())
     if len(result) == 0:
         break
     for res in result:
@@ -150,7 +184,7 @@ def is_in_manifest(projectpath):
 def add_to_manifest(repositories):
     for repository in repositories:
         if 'dep_type' in repository:
-            print 'dep_type is depreciated, please update your ev.dependencies config'
+            print('dep_type is depreciated, please update your ev.dependencies config')
 
         repo_name = repository['repository']
         dep_type = repo_name.split('_')[1]
@@ -163,10 +197,10 @@ def add_to_manifest(repositories):
 
         repo_target = repository['target_path']
         if is_in_manifest(repo_target):
-            print '%s already fetched to %s' % (repo_name, repo_target)
+            print('%s already fetched to %s' % (repo_name, repo_target))
             continue
 
-        print 'Adding dependency: %s -> %s' % (repo_name, repo_target)
+        print('Adding dependency: %s -> %s' % (repo_name, repo_target))
         project = ElementTree.Element("project", attrib = {
             "path": repo_target, "name": "%s" % repo_name, "remote": "evervolv"
             })
@@ -179,7 +213,7 @@ def add_to_manifest(repositories):
         lm.append(project)
 
         indent(lm, 0)
-        raw_xml = ElementTree.tostring(lm)
+        raw_xml = ElementTree.tostring(lm).decode()
         raw_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' + raw_xml
 
         f = open(dep_manifest, 'w')
@@ -197,7 +231,7 @@ def fetch_repos(repos):
     if fetch_list:
         add_to_manifest(fetch_list)
         repo_paths = ' '.join([ r.get('target_path') for r in fetch_list ])
-        print 'Syncing', repo_paths
+        print('Syncing', repo_paths)
         os.system('repo sync --force-sync %s' % repo_paths)
 
 def fetch_children(repos):
@@ -236,7 +270,7 @@ def fetch_dependencies(repo_path):
         with open(os.path.join(repo_path,dependency_filename)) as f:
             dependencies = json.load(f)
     except IOError as e:
-        print e
+        print(e)
 
     # Fetch toplevel dependencies
     fetch_repos(dependencies)
@@ -256,7 +290,7 @@ if depsonly:
     if repo_path:
         fetch_dependencies(repo_path)
     else:
-        print "Trying dependencies-only mode on a non-existing device tree?"
+        print("Trying dependencies-only mode on a non-existing device tree?")
 
     sys.exit()
 
@@ -264,7 +298,7 @@ else:
     for repository in repositories:
         repo_name = repository['name']
         if re.match(r"^android_device_[^_]*_" + device + "$", repo_name):
-            print "Found repository: %s" % repository['name']
+            print("Found repository: %s" % repository['name'])
             manufacturer = repo_name.replace("android_device_", "").replace("_" + device, "")
 
             repo_path = "device/%s/%s" % (manufacturer, device)
@@ -273,12 +307,12 @@ else:
                               'target_path':repo_path,
                               'dep_type':'device'}])
 
-            print "Syncing repository to retrieve project."
+            print("Syncing repository to retrieve project.")
             os.system('repo sync --force-sync %s' % repo_path)
-            print "Repository synced!"
+            print("Repository synced!")
 
             fetch_dependencies(repo_path)
-            print "Done"
+            print("Done")
             sys.exit()
 
-print "Repository for %s not found in the Evervolv Github repository list. If this is in error, you may need to manually add it to your local_manifests." % device
+print("Repository for %s not found in the Evervolv Github repository list. If this is in error, you may need to manually add it to your local_manifests." % device)
