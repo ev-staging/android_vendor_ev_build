@@ -23,6 +23,10 @@ type Product_variables struct {
 	Needs_non_pie_support struct {
 		Cppflags []string
 	}
+
+	Needs_egl_khr_workaround struct {
+		Cflags []string
+	}
 }
 
 type ProductVariables struct {
@@ -32,4 +36,5 @@ type ProductVariables struct {
 	Has_legacy_mmap  *bool `json:",omitempty"`
 	Needs_prelink_support  *bool `json:",omitempty"`
 	Needs_non_pie_support  *bool `json:",omitempty"`
+	Needs_egl_khr_workaround  *bool `json:",omitempty"`
 }

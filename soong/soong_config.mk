@@ -4,6 +4,7 @@ evervolv_soong:
 	$(hide) (\
 	echo '{'; \
 	echo '"Evervolv": {'; \
+	echo '    "Needs_egl_khr_workaround": $(if $(filter true,$(BOARD_EGL_WORKAROUND_BUG_10194508)),true,false),'; \
 	echo '    "Needs_non_pie_support": $(if $(filter true,$(TARGET_NEEDS_PRELINK_SUPPORT)),true,false),'; \
 	echo '    "Needs_prelink_support": $(if $(filter true,$(TARGET_NEEDS_PRELINK_SUPPORT)),true,false),'; \
 	echo '    "Has_legacy_camera_hal1": $(if $(filter true,$(TARGET_HAS_LEGACY_CAMERA_HAL1)),true,false),'; \
