@@ -28,3 +28,6 @@ include $(SRC_EVERVOLV_DIR)/build/core/qcom_target.mk
 include $(SRC_EVERVOLV_DIR)/build/core/kernel_config.mk
 
 BUILD_RRO_SYSTEM_PACKAGE := $(SRC_EVERVOLV_DIR)/build/core/system_rro.mk
+
+# Sepolicy specifics
+$(eval include $(SRC_EVERVOLV_DIR)/sepolicy/sepolicy.mk)
