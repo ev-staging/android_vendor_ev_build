@@ -9,6 +9,7 @@ Additional Evervolv functions:
 - evgerrit:        A Git wrapper that fetches/pushes patch from/to Evervolv Gerrit Review.
 - repodiff:        Utility to fetch diff logs between branches.
 - repolog:         Utility to fetch diff logs between branches between different remotes.
+- repopick:        Utility to fetch changes from Gerrit.
 EOF
 }
 
@@ -410,6 +411,11 @@ function repolog() {
 	else
 		gopt=$gitopts br1=$branch1 br2=$branch2 repo forall -pvc 'git log ${gopt} ${br1}..${br2}'
 	fi
+}
+
+function repopick() {
+    T=$(gettop)
+    $T/vendor/ev/build/tools/repopick.py $@
 }
 
 function fixup_common_out_dir() {
