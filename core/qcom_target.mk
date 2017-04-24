@@ -58,16 +58,8 @@ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
         endif
     endif
 
-    TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
-    CLANG_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    CLANG_TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
-
-    # Multiarch needs these too..
-    2ND_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    2ND_TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
-    2ND_CLANG_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    2ND_CLANG_TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
+    PRIVATE_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
+    PRIVATE_TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
 
     ifeq ($(call is-board-platform-in-list, $(A_FAMILY)),true)
         MSM_VIDC_TARGET_LIST := $(A_FAMILY)
