@@ -2,12 +2,13 @@ function __print_ev_functions_help() {
 cat <<EOF
 Additional Evervolv functions:
 - find_deps:       Roomservice utility to fetch device dependencies.
+- purge_deps:      Utility to remove tracked repos from roomservice. (Keeps local history)
 - cleantree:       Wipes local changes from git repository.
 - aospremote:      Add git remote for matching AOSP repository.
 - cafremote:       Add git remote for matching CodeAurora repository.
 - evgerrit:        A Git wrapper that fetches/pushes patch from/to Evervolv Gerrit Review.
 - repodiff:        Utility to fetch diff logs between branches.
-- repolog:        Utility to fetch diff logs between branches between different remotes.
+- repolog:         Utility to fetch diff logs between branches between different remotes.
 EOF
 }
 
@@ -24,6 +25,24 @@ function find_deps() {
     then
         echo "find_deps failed."
     fi
+}
+
+function purge_deps() {
+    read -p "Are you sure you want to remove roomservice repos? (y|N)" ans
+    test "$ans" = "Y" || test "$ans" = "y" || return
+    if [ ! "$ANDROID_BUILD_TOP" ]; then
+        export ANDROID_BUILD_TOP=$(gettop)
+    fi
+    if [ "$(pwd)" != "$ANDROID_BUILD_TOP" ]; then
+        cd "$ANDROID_BUILD_TOP"
+    fi
+    if [ ! -d .repo ]; then
+        echo .repo directory not found.
+    fi
+    rm -rf .repo/local_manifests/
+    echo "Local manifests removed, syncing so repo removes them"
+    repo sync -fd >/dev/null 2>&1
+    echo "Done"
 }
 
 function breakfast()

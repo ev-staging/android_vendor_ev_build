@@ -127,17 +127,17 @@ def is_in_manifest(projectpath):
 def add_to_manifest(repositories):
     for repository in repositories:
         if 'dep_type' in repository:
-            dep_manifest = os.path.join(local_manifests_dir, repository['dep_type'] + ".xml")
-        else:
-            print 'dep_type not found, assuming device tree, otherwise please update your ev.dependencies config'
-            dep_manifest = os.path.join(local_manifests_dir, "device.xml")
+            print 'dep_type is depreciated, please update your ev.dependencies config'
+
+        repo_name = repository['repository']
+        dep_type = repo_name.split('_')[1]
+        dep_manifest = os.path.join(local_manifests_dir, "%s" % dep_type + ".xml")
         try:
             lm = ElementTree.parse(dep_manifest)
             lm = lm.getroot()
         except:
             lm = ElementTree.Element("manifest")
 
-        repo_name = repository['repository']
         repo_target = repository['target_path']
         if is_in_manifest(repo_target):
             print '%s already fetched to %s' % (repo_name, repo_target)
@@ -199,8 +199,7 @@ def fetch_vendors(repo_path):
     vendor_repos = [
         {
             'target_path': 'vendor/%s' % vendor,
-            'repository' : 'android_vendor_%s' % vendor,
-            'dep_type'   : 'vendor'
+            'repository' : 'android_vendor_%s' % vendor
         },
     ]
     fetch_repos(vendor_repos)
