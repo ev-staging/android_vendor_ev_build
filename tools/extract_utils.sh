@@ -67,15 +67,15 @@ function setup_vendor() {
         exit 1
     fi
 
-    export CM_ROOT="$3"
-    if [ ! -d "$CM_ROOT" ]; then
-        echo "\$CM_ROOT must be set and valid before including this script!"
+    export LINEAGE_ROOT="$3"
+    if [ ! -d "$LINEAGE_ROOT" ]; then
+        echo "\$LINEAGE_ROOT must be set and valid before including this script!"
         exit 1
     fi
 
     export OUTDIR=vendor/"$VENDOR"/"$DEVICE"
-    if [ ! -d "$CM_ROOT/$OUTDIR" ]; then
-        mkdir -p "$CM_ROOT/$OUTDIR"
+    if [ ! -d "$LINEAGE_ROOT/$OUTDIR" ]; then
+        mkdir -p "$LINEAGE_ROOT/$OUTDIR"
     fi
 
     VNDNAME="$6"
@@ -736,7 +736,6 @@ function parse_file_list() {
         LIST=$1
     fi
 
-
     PRODUCT_PACKAGES_LIST=()
     PRODUCT_PACKAGES_HASHES=()
     PRODUCT_PACKAGES_FIXUP_HASHES=()
@@ -850,7 +849,7 @@ function get_file() {
 # Convert apk|jar .odex in the corresposing classes.dex
 #
 function oat2dex() {
-    local CM_TARGET="$1"
+    local LINEAGE_TARGET="$1"
     local OEM_TARGET="$2"
     local SRC="$3"
     local TARGET=
@@ -858,16 +857,16 @@ function oat2dex() {
     local HOST="$(uname)"
 
     if [ -z "$BAKSMALIJAR" ] || [ -z "$SMALIJAR" ]; then
-        export BAKSMALIJAR="$CM_ROOT"/vendor/ev/build/tools/smali/baksmali.jar
-        export SMALIJAR="$CM_ROOT"/vendor/ev/build/tools/smali/smali.jar
+        export BAKSMALIJAR="$LINEAGE_ROOT"/vendor/ev/build/tools/smali/baksmali.jar
+        export SMALIJAR="$LINEAGE_ROOT"/vendor/ev/build/tools/smali/smali.jar
     fi
 
     if [ -z "$VDEXEXTRACTOR" ]; then
-        export VDEXEXTRACTOR="$CM_ROOT"/vendor/ev/build/tools/"$HOST"/vdexExtractor
+        export VDEXEXTRACTOR="$LINEAGE_ROOT"/vendor/ev/build/tools/"$HOST"/vdexExtractor
     fi
 
     if [ -z "$CDEXCONVERTER" ]; then
-        export CDEXCONVERTER="$CM_ROOT"/vendor/ev/build/tools/"$HOST"/compact_dex_converter
+        export CDEXCONVERTER="$LINEAGE_ROOT"/vendor/ev/build/tools/"$HOST"/compact_dex_converter
     fi
 
     # Extract existing boot.oats to the temp folder
@@ -887,11 +886,11 @@ function oat2dex() {
         FULLY_DEODEXED=1 && return 0 # system is fully deodexed, return
     fi
 
-    if [ ! -f "$CM_TARGET" ]; then
+    if [ ! -f "$LINEAGE_TARGET" ]; then
         return;
     fi
 
-    if grep "classes.dex" "$CM_TARGET" >/dev/null; then
+    if grep "classes.dex" "$LINEAGE_TARGET" >/dev/null; then
         return 0 # target apk|jar is already odexed, return
     fi
 
@@ -919,7 +918,7 @@ function oat2dex() {
                 java -jar "$BAKSMALIJAR" deodex -o "$TMPDIR/dexout" -b "$BOOTOAT" -d "$TMPDIR" "$TMPDIR/$(basename "$OAT")"
                 java -jar "$SMALIJAR" assemble "$TMPDIR/dexout" -o "$TMPDIR/classes.dex"
             fi
-        elif [[ "$CM_TARGET" =~ .jar$ ]]; then
+        elif [[ "$LINEAGE_TARGET" =~ .jar$ ]]; then
             JAROAT="$TMPDIR/system/framework/$ARCH/boot-$(basename ${OEM_TARGET%.*}).oat"
             JARVDEX="/system/framework/boot-$(basename ${OEM_TARGET%.*}).vdex"
             if [ ! -f "$JAROAT" ]; then
@@ -1114,7 +1113,7 @@ function extract() {
     local FIXUP_HASHLIST=( ${PRODUCT_COPY_FILES_FIXUP_HASHES[@]} ${PRODUCT_PACKAGES_FIXUP_HASHES[@]} )
     local PRODUCT_COPY_FILES_COUNT=${#PRODUCT_COPY_FILES_LIST[@]}
     local COUNT=${#FILELIST[@]}
-    local OUTPUT_ROOT="$CM_ROOT"/"$OUTDIR"/proprietary
+    local OUTPUT_ROOT="$LINEAGE_ROOT"/"$OUTDIR"/proprietary
     local OUTPUT_TMP="$TMPDIR"/"$OUTDIR"/proprietary
 
     if [ "$SRC" = "adb" ]; then
@@ -1142,7 +1141,7 @@ function extract() {
             # If OTA is block based, extract it.
             elif [ -a "$DUMPDIR"/system.new.dat ]; then
                 echo "Converting system.new.dat to system.img"
-                python "$CM_ROOT"/vendor/ev/build/tools/sdat2img.py "$DUMPDIR"/system.transfer.list "$DUMPDIR"/system.new.dat "$DUMPDIR"/system.img 2>&1
+                python "$LINEAGE_ROOT"/vendor/ev/build/tools/sdat2img.py "$DUMPDIR"/system.transfer.list "$DUMPDIR"/system.new.dat "$DUMPDIR"/system.img 2>&1
                 rm -rf "$DUMPDIR"/system.new.dat "$DUMPDIR"/system
                 mkdir "$DUMPDIR"/system "$DUMPDIR"/tmp
                 echo "Requesting sudo access to mount the system.img"
@@ -1318,7 +1317,7 @@ function extract_firmware() {
     local FILELIST=( ${PRODUCT_COPY_FILES_LIST[@]} )
     local COUNT=${#FILELIST[@]}
     local SRC="$2"
-    local OUTPUT_DIR="$CM_ROOT"/"$OUTDIR"/radio
+    local OUTPUT_DIR="$LINEAGE_ROOT"/"$OUTDIR"/radio
 
     if [ "$VENDOR_RADIO_STATE" -eq "0" ]; then
         echo "Cleaning firmware output directory ($OUTPUT_DIR).."
