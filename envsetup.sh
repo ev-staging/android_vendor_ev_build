@@ -75,10 +75,10 @@ function aospremote() {
     if [ ! "$ANDROID_BUILD_TOP" ]; then
         export ANDROID_BUILD_TOP=$(gettop)
     fi
-    PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
     if (echo $PROJECT | grep -qv "^device")
     then
-        PFX="platform/"
+        local PFX="platform/"
     fi
     git remote add aosp https://android.googlesource.com/$PFX$PROJECT
     echo "Remote 'aosp' created"
@@ -95,10 +95,10 @@ function cafremote()
     if [ ! "$ANDROID_BUILD_TOP" ]; then
         export ANDROID_BUILD_TOP=$(gettop)
     fi
-    PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+    local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
     if (echo $PROJECT | grep -qv "^device")
     then
-        PFX="platform/"
+        local PFX="platform/"
     fi
     git remote add caf https://source.codeaurora.org/quic/la/$PFX$PROJECT
     echo "Remote 'caf' created"
