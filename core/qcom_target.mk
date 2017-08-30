@@ -25,6 +25,10 @@ $(call project-set-path,qcom-$(2),$(strip $(path)))
 endef
 
 ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+    BOARD_USES_QTI_HARDWARE := true
+endif
+
+ifeq ($(BOARD_USES_QTI_HARDWARE),true)
 
     A_FAMILY := msm7x27a msm7x30 msm8660 msm8960
     B_FAMILY := msm8226 msm8610 msm8974
