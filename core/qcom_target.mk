@@ -54,8 +54,14 @@ ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
         endif
         # Enable legacy audio functions
         ifeq ($(BOARD_USES_LEGACY_ALSA_AUDIO),true)
+            USE_CUSTOM_AUDIO_POLICY := 1
             qcom_flags += -DLEGACY_ALSA_AUDIO
         endif
+    endif
+
+    # Enable extra offloading for post-805 targets
+    ifneq ($(filter msm8992 msm8994,$(TARGET_BOARD_PLATFORM)),)
+        qcom_flags += -DHAS_EXTRA_FLAC_METADATA
     endif
 
     PRIVATE_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
