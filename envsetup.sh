@@ -76,6 +76,11 @@ function aospremote() {
         export ANDROID_BUILD_TOP=$(gettop)
     fi
     local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+    # Google moved the repo location in Oreo
+    if [ $PROJECT = "build/make" ]
+    then
+        PROJECT="build"
+    fi
     if (echo $PROJECT | grep -qv "^device")
     then
         local PFX="platform/"
@@ -96,6 +101,11 @@ function cafremote()
         export ANDROID_BUILD_TOP=$(gettop)
     fi
     local PROJECT=$(pwd -P | sed -e "s#$ANDROID_BUILD_TOP\/##; s#-caf.*##; s#\/default##")
+    # Google moved the repo location in Oreo
+    if [ $PROJECT = "build/make" ]
+    then
+        PROJECT="build"
+    fi
     if (echo $PROJECT | grep -qv "^device")
     then
         local PFX="platform/"
