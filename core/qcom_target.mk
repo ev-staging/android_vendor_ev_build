@@ -52,6 +52,11 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
                 USE_CUSTOM_AUDIO_POLICY := 1
             endif
         endif
+        ifeq ($(filter msm8960,$(TARGET_BOARD_PLATFORM)),)
+            # Use buffer age for older (scorpion) chipsets
+            PRODUCT_PROPERTY_OVERRIDES += \
+                debug.hwui.use_buffer_age=false
+        endif
     endif
 
     # Allow building audio encoders
