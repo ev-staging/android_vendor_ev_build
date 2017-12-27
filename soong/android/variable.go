@@ -39,6 +39,10 @@ type Product_variables struct {
 	Uses_media_extensions struct {
 		Cflags []string
 	}
+
+	Uses_qcom_bsp_legacy struct {
+		Cppflags []string
+	}
 }
 
 type ProductVariables struct {
@@ -52,4 +56,5 @@ type ProductVariables struct {
 	Target_process_sdk_version_override *string `json:",omitempty"`
 	Target_shim_libs  *string `json:",omitempty"`
 	Uses_media_extensions   *bool `json:",omitempty"`
+	Uses_qcom_bsp_legacy  *bool `json:",omitempty"`
 }
