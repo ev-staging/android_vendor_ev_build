@@ -27,6 +27,10 @@ type Product_variables struct {
 	Needs_egl_khr_workaround struct {
 		Cflags []string
 	}
+
+	Target_shim_libs struct {
+		Cppflags []string
+	}
 }
 
 type ProductVariables struct {
@@ -37,4 +41,5 @@ type ProductVariables struct {
 	Needs_prelink_support  *bool `json:",omitempty"`
 	Needs_non_pie_support  *bool `json:",omitempty"`
 	Needs_egl_khr_workaround  *bool `json:",omitempty"`
+	Target_shim_libs  *string `json:",omitempty"`
 }
