@@ -21,6 +21,10 @@ $(if $(USE_DEVICE_SPECIFIC_$(1)), \
 $(call project-set-path,qcom-$(2),$(strip $(path)))
 endef
 
+ifeq ($(TARGET_HW_DISK_ENCRYPTION),true)
+    TARGET_CRYPTFS_HW_PATH ?= vendor/qcom/opensource/cryptfs_hw
+endif
+
 ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
     BOARD_USES_QTI_HARDWARE := true
 endif
