@@ -10,6 +10,7 @@ $(call add_json_bool, Device_support_legacy_hwfde, $(filter true,$(TARGET_LEGACY
 $(call add_json_bool, Device_support_wait_for_qsee, $(filter true,$(TARGET_KEYMASTER_WAIT_FOR_QSEE)))
 $(call add_json_bool, Has_legacy_camera_hal1, $(filter true,$(TARGET_HAS_LEGACY_CAMERA_HAL1)))
 $(call add_json_bool, Has_legacy_mmap, $(filter true,$(BOARD_USES_LEGACY_MMAP)))
+$(call add_json_str, Java_Source_Overlays, $(JAVA_SOURCE_OVERLAYS))
 $(call add_json_bool, Needs_egl_khr_workaround, $(filter true,$(BOARD_EGL_WORKAROUND_BUG_10194508)))
 $(call add_json_bool, Needs_non_pie_support, $(filter true,$(TARGET_NEEDS_NON_PIE_SUPPORT)))
 $(call add_json_bool, Needs_prelink_support, $(filter true,$(TARGET_NEEDS_PRELINK_SUPPORT)))
