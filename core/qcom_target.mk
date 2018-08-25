@@ -112,6 +112,11 @@ $(call set-device-specific-path,POWER,power,hardware/qcom/power)
 $(call wlan-set-path-variant,wlan)
 $(call bt-vendor-set-path-variant,bt-caf)
 
+PRODUCT_SOONG_NAMESPACES += \
+    hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT) \
+    hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT) \
+    hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT)
+
 else
 
 $(call project-set-path,qcom-audio,hardware/qcom/audio)
