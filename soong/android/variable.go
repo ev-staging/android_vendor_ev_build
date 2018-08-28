@@ -14,6 +14,10 @@ type Product_variables struct {
 		Cflags []string
 	}
 
+	Device_support_legacy_hwfde struct {
+		Cflags []string
+	}
+
 	Has_legacy_camera_hal1 struct {
 		Cflags []string
 	}
