@@ -7,6 +7,7 @@ $(call add_json_str_omitempty, Additional_gralloc_10_usage_bits, $(TARGET_ADDITI
 $(call add_json_bool, Device_support_hwfde, $(filter true,$(TARGET_HW_DISK_ENCRYPTION)))
 $(call add_json_bool, Device_support_hwfde_perf, $(filter true,$(TARGET_HW_DISK_ENCRYPTION_PERF)))
 $(call add_json_bool, Device_support_legacy_hwfde, $(filter true,$(TARGET_LEGACY_HW_DISK_ENCRYPTION)))
+$(call add_json_bool, Device_support_wait_for_qsee, $(filter true,$(TARGET_KEYMASTER_WAIT_FOR_QSEE)))
 $(call add_json_bool, Has_legacy_camera_hal1, $(filter true,$(TARGET_HAS_LEGACY_CAMERA_HAL1)))
 $(call add_json_bool, Has_legacy_mmap, $(filter true,$(BOARD_USES_LEGACY_MMAP)))
 $(call add_json_bool, Needs_egl_khr_workaround, $(filter true,$(BOARD_EGL_WORKAROUND_BUG_10194508)))
