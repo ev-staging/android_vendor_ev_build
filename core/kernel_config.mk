@@ -107,3 +107,5 @@ ifeq ($(HOST_OS),darwin)
   KERNEL_MAKE_FLAGS += C_INCLUDE_PATH=$(TOPDIR)/external/elfutils/libelf:/usr/local/opt/openssl/include
   KERNEL_MAKE_FLAGS += LIBRARY_PATH=/usr/local/opt/openssl/lib
 endif
+
+include $(SRC_EVERVOLV_DIR)/build/core/kernel_soong.mk
