@@ -24,10 +24,6 @@ type Product_variables struct {
 		Cppflags []string
 	}
 
-	Needs_text_relocations struct {
-		Cppflags []string
-	}
-
 	Target_process_sdk_version_override struct {
 		Cppflags []string
 	}
@@ -52,7 +48,6 @@ type ProductVariables struct {
 	Needs_egl_khr_workaround  *bool `json:",omitempty"`
 	Needs_non_pie_support  *bool `json:",omitempty"`
 	Needs_prelink_support  *bool `json:",omitempty"`
-	Needs_text_relocations  *bool `json:",omitempty"`
 	Target_process_sdk_version_override *string `json:",omitempty"`
 	Target_shim_libs  *string `json:",omitempty"`
 	Uses_media_extensions   *bool `json:",omitempty"`
