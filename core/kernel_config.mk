@@ -36,6 +36,8 @@
 #                                          is in PATH
 #   USE_CCACHE                         = Enable ccache (global Android flag)
 
+BUILD_TOP := $(shell pwd)
+
 TARGET_AUTO_KDIR := $(shell echo $(TARGET_DEVICE_DIR) | sed -e 's/^device/kernel/g')
 TARGET_KERNEL_SOURCE ?= $(TARGET_AUTO_KDIR)
 ifneq ($(TARGET_PREBUILT_KERNEL),)
@@ -73,7 +75,7 @@ ifneq ($(USE_CCACHE),)
     CCACHE_BIN := $(shell which ccache)
 
     ifeq ($(CCACHE_BIN),)
-        CCACHE_BIN := $(TOPDIR)/prebuilts/misc/$(HOST_PREBUILT_TAG)/ccache/ccache
+        CCACHE_BIN := $(BUILD_TOP)/prebuilts/misc/$(HOST_PREBUILT_TAG)/ccache/ccache
         # Check that the executable is here.
         CCACHE_BIN := $(strip $(wildcard $(CCACHE_BIN)))
     endif
@@ -104,7 +106,7 @@ ifeq ($(KERNEL_ARCH),arm64)
 endif
 
 ifeq ($(HOST_OS),darwin)
-  KERNEL_MAKE_FLAGS += C_INCLUDE_PATH=$(TOPDIR)/external/elfutils/libelf:/usr/local/opt/openssl/include
+  KERNEL_MAKE_FLAGS += C_INCLUDE_PATH=$(BUILD_TOP)/external/elfutils/libelf:/usr/local/opt/openssl/include
   KERNEL_MAKE_FLAGS += LIBRARY_PATH=/usr/local/opt/openssl/lib
 endif
 
