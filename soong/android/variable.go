@@ -75,7 +75,6 @@ type ProductVariables struct {
 	Force_virtual_partitions  *bool `json:",omitempty"`
 	Has_legacy_camera_hal1  *bool `json:",omitempty"`
 	Has_legacy_mmap  *bool `json:",omitempty"`
-	Java_Source_Overlays *string `json:",omitempty"`
 	Needs_egl_khr_workaround  *bool `json:",omitempty"`
 	Needs_non_pie_support  *bool `json:",omitempty"`
 	Needs_prelink_support  *bool `json:",omitempty"`
