@@ -1,8 +1,5 @@
 # Target-specific configuration
 
-# Bring in Qualcomm helper macros
-include $(SRC_EVERVOLV_DIR)/build/core/qcom_utils.mk
-
 # Populate the qcom hardware variants in the project pathmap.
 define wlan-set-path-variant
 $(call project-set-path-variant,wlan,TARGET_WLAN_VARIANT,hardware/qcom/$(1))
@@ -44,7 +41,7 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
 
     # UM platforms no longer need this set on O+
     ifneq ($(TARGET_USES_AOSP),true)
-        ifneq ($(call is-board-platform-in-list, $(UM_PLATFORMS)),true)
+        ifneq ($(filter $(B_FAMILY) $(B64_FAMILY) $(BR_FAMILY),$(TARGET_BOARD_PLATFORM)),)
             TARGET_USES_QCOM_BSP := true
         endif
     endif
@@ -68,12 +65,12 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
     TARGET_USES_QCOM_MM_AUDIO := true
 
     # Enable color metadata for every UM targets
-    ifeq ($(call is-board-platform-in-list, $(UM_PLATFORMS)),true)
+    ifneq ($(filter $(UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
         TARGET_USES_COLOR_METADATA := true
     endif
 
     # Enable DRM PP driver on UM platforms that support it
-    ifeq ($(call is-board-platform-in-list, $(UM_4_9_FAMILY)),true)
+    ifneq ($(filter $(UM_4_9_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         TARGET_USES_DRM_PP := true
     endif
 
@@ -82,7 +79,7 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
     TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS += | (1 << 21)
 
     # Mark GRALLOC_USAGE_PRIVATE_10BIT_TP as valid gralloc bits on UM platforms that support it
-    ifeq ($(call is-board-platform-in-list, $(UM_4_9_FAMILY)),true)
+    ifneq ($(filter $(UM_4_9_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS += | (1 << 27)
     endif
 
@@ -92,25 +89,25 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
     # Every qcom platform is considered a vidc target
     MSM_VIDC_TARGET_LIST := $(TARGET_BOARD_PLATFORM)
 
-    ifeq ($(call is-board-platform-in-list, $(A_FAMILY)),true)
+    ifneq ($(filter $(A_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8960
     else
-    ifeq ($(call is-board-platform-in-list, $(B_FAMILY)),true)
+    ifneq ($(filter $(B_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8974
     else
-    ifeq ($(call is-board-platform-in-list, $(B64_FAMILY)),true)
+    ifneq ($(filter $(B64_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8994
     else
-    ifeq ($(call is-board-platform-in-list, $(BR_FAMILY)),true)
+    ifneq ($(filter $(BR_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8916
     else
-    ifeq ($(call is-board-platform-in-list, $(UM_3_18_FAMILY)),true)
+    ifneq ($(filter $(UM_3_18_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8996
     else
-    ifeq ($(call is-board-platform-in-list, $(UM_4_4_FAMILY)),true)
+    ifneq ($(filter $(UM_4_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8998
     else
-    ifeq ($(call is-board-platform-in-list, $(UM_4_9_FAMILY)),true)
+    ifneq ($(filter $(UM_4_9_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := sdm845
     else
         QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
