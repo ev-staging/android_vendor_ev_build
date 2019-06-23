@@ -91,32 +91,20 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
 
     ifneq ($(filter $(A_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8960
-    else
-    ifneq ($(filter $(B_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    else ifneq ($(filter $(B_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8974
-    else
-    ifneq ($(filter $(B64_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    else ifneq ($(filter $(B64_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8994
-    else
-    ifneq ($(filter $(BR_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    else ifneq ($(filter $(BR_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8916
-    else
-    ifneq ($(filter $(UM_3_18_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    else ifneq ($(filter $(UM_3_18_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8996
-    else
-    ifneq ($(filter $(UM_4_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    else ifneq ($(filter $(UM_4_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8998
-    else
-    ifneq ($(filter $(UM_4_9_FAMILY),$(TARGET_BOARD_PLATFORM)),)
+    else ifneq ($(filter $(UM_4_9_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := sdm845
     else
         QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
-    endif
-    endif
-    endif
-    endif
-    endif
-    endif
     endif
 
 $(call set-device-specific-path,AUDIO,audio,hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT))
