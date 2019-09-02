@@ -13,10 +13,8 @@
 # limitations under the License.
 
 $(call inherit-product, build/target/product/aosp_arm.mk)
-$(call inherit-product, $(SRC_EVERVOLV_DIR)/config/common.mk)
 
-# Allow building otatools
-TARGET_FORCE_OTA_PACKAGE := true
+include $(SRC_EVERVOLV_DIR)/build/target/product/evervolv.mk
 
 TARGET_USES_64_BIT_BINDER := true
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2018-2019 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, build/target/product/aosp_x86.mk)
+$(call inherit-product, $(SRC_EVERVOLV_DIR)/config/common.mk)
 
-include $(SRC_EVERVOLV_DIR)/build/target/product/evervolv.mk
+PRODUCT_COPY_FILES += \
+    device/generic/goldfish/data/etc/permissions/privapp-permissions-goldfish.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-goldfish.xml \
 
-TARGET_USES_64_BIT_BINDER := true
-
-PRODUCT_NAME := ev_x86
+# Allow building otatools
+TARGET_FORCE_OTA_PACKAGE := true
