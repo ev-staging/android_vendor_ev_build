@@ -38,7 +38,7 @@ checkapi-evervolv : check-evervolv-public-api
 # (See evervolv-sdk/Android.mk)
 # we need to add api-stubs as additional dependency of the api check.
 
-$(INTERNAL_EVERVOLV_PLATFORM_API_FILE): evervolv-api-stubs-docs
+$(INTERNAL_EVERVOLV_PLATFORM_API_FILE):
 
 # Check that the API we're building hasn't broken the last-released
 # SDK version.
