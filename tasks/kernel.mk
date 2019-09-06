@@ -206,6 +206,9 @@ ifneq ($(TARGET_KERNEL_MODULES),)
     $(error TARGET_KERNEL_MODULES is no longer supported!)
 endif
 
+# System tools are no longer allowed on 10+
+PATH_OVERRIDE += $(TOOLS_PATH_OVERRIDE)
+
 KERNEL_ADDITIONAL_CONFIG_OUT := $(KERNEL_OUT)/.additional_config
 
 # Internal implementation of make-kernel-target
