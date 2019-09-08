@@ -110,30 +110,28 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
         QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
     endif
 
-$(call set-device-specific-path,AUDIO,audio,hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT))
-$(call set-device-specific-path,DISPLAY,display,hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT))
-$(call set-device-specific-path,MEDIA,media,hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT))
+$(call set-device-specific-path,AUDIO,audio,hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)/audio)
+$(call set-device-specific-path,DISPLAY,display,hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)/display)
+$(call set-device-specific-path,MEDIA,media,hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)/media)
 
-$(call set-device-specific-path,CAMERA,camera,hardware/qcom/camera)
+$(call set-device-specific-path,CAMERA,camera,hardware/qcom-caf/camera)
 $(call set-device-specific-path,DATA_IPA_CFG_MGR,data-ipa-cfg-mgr,vendor/qcom/opensource/data-ipa-cfg-mgr)
-$(call set-device-specific-path,GPS,gps,hardware/qcom/gps)
-$(call set-device-specific-path,SENSORS,sensors,hardware/qcom/sensors)
+$(call set-device-specific-path,GPS,gps,hardware/qcom-caf/gps)
+$(call set-device-specific-path,SENSORS,sensors,hardware/qcom-caf/sensors)
 $(call set-device-specific-path,LOC_API,loc-api,vendor/qcom/opensource/location)
 $(call set-device-specific-path,DATASERVICES,dataservices,vendor/qcom/opensource/dataservices)
-$(call set-device-specific-path,POWER,power,hardware/qcom/power)
-$(call set-device-specific-path,THERMAL,thermal,hardware/qcom/thermal)
-$(call set-device-specific-path,VR,vr,hardware/qcom/vr)
+$(call set-device-specific-path,POWER,power,hardware/qcom-caf/power)
+$(call set-device-specific-path,THERMAL,thermal,hardware/qcom-caf/thermal)
+$(call set-device-specific-path,VR,vr,hardware/qcom-caf/vr)
 
 $(call wlan-set-path-variant,wlan-caf)
 $(call bt-vendor-set-path-variant,bt-caf)
 
 PRODUCT_SOONG_NAMESPACES += \
-    hardware/qcom/audio-caf/$(QCOM_HARDWARE_VARIANT) \
-    hardware/qcom/display-caf/$(QCOM_HARDWARE_VARIANT) \
-    hardware/qcom/media-caf/$(QCOM_HARDWARE_VARIANT)
+    hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
 
 PRODUCT_CFI_INCLUDE_PATHS += \
-    hardware/qcom/wlan-caf/qcwcn/wpa_supplicant_8_lib 
+    hardware/qcom-caf/wlan/qcwcn/wpa_supplicant_8_lib 
 
 else
 
