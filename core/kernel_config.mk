@@ -23,9 +23,9 @@
 #   TARGET_KERNEL_ADDITIONAL_FLAGS     = Additional make flags, optional
 #   TARGET_KERNEL_ARCH                 = Kernel Arch
 #   TARGET_KERNEL_CROSS_COMPILE_PREFIX = Compiler prefix (e.g. arm-eabi-)
-#                                          defaults to arm-linux-androidkernel- for arm
-#                                                      aarch64-linux-androidkernel- for arm64
-#                                                      x86_64-linux-androidkernel- for x86
+#                                          defaults to arm-linux-androideabi- for arm
+#                                                      aarch64-linux-android- for arm64
+#                                                      x86_64-linux-android- for x86
 #
 #   TARGET_KERNEL_CLANG_COMPILE        = Compile kernel with clang, defaults to false
 #
@@ -57,14 +57,14 @@ KERNEL_TOOLCHAIN_arm64 := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarc
 ifeq ($(TARGET_KERNEL_CLANG_COMPILE),true)
     KERNEL_TOOLCHAIN_PREFIX_arm64 := aarch64-linux-android-
 else
-    KERNEL_TOOLCHAIN_PREFIX_arm64 := aarch64-linux-androidkernel-
+    KERNEL_TOOLCHAIN_PREFIX_arm64 := aarch64-linux-android-
 endif
 # arm toolchain
 KERNEL_TOOLCHAIN_arm := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/arm/arm-linux-androideabi-4.9/bin
-KERNEL_TOOLCHAIN_PREFIX_arm := arm-linux-androidkernel-
+KERNEL_TOOLCHAIN_PREFIX_arm := arm-linux-androideabi-
 # x86 toolchain
 KERNEL_TOOLCHAIN_x86 := $(BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/x86/x86_64-linux-android-4.9/bin
-KERNEL_TOOLCHAIN_PREFIX_x86 := x86_64-linux-androidkernel-
+KERNEL_TOOLCHAIN_PREFIX_x86 := x86_64-linux-android-
 
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(strip $(TARGET_KERNEL_CROSS_COMPILE_PREFIX))
 ifneq ($(TARGET_KERNEL_CROSS_COMPILE_PREFIX),)
