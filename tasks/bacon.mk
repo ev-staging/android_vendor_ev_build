@@ -1,4 +1,5 @@
 # Copyright (C) 2017 Unlegacy-Android
+# Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +15,16 @@
 
 # -----------------------------------------------------------------
 # Bacon update package
+ifneq ($(TARGET_OTA_PACKAGE_NAME),)
+OTA_PACKAGE_NAME := $(TARGET_OTA_PACKAGE_NAME)
+else
+OTA_PACKAGE_NAME := $(TARGET_PRODUCT)-ota-$(FILE_NAME_TAG)
+endif
+
+INTERNAL_BACON_PACKAGE := $(PRODUCT_OUT)/$(OTA_PACKAGE_NAME).zip
+
 .PHONY: bacon
 bacon: $(INTERNAL_OTA_PACKAGE_TARGET)
-	$(hide) $(MD5SUM) $(INTERNAL_OTA_PACKAGE_TARGET) | sed "s|$(PRODUCT_OUT)/||" > $(INTERNAL_OTA_PACKAGE_TARGET).md5sum
-	@echo "Package Complete: $(INTERNAL_OTA_PACKAGE_TARGET)" >&2
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(INTERNAL_BACON_PACKAGE)
+	$(hide) $(MD5SUM) $(INTERNAL_BACON_PACKAGE) | sed "s|$(PRODUCT_OUT)/||" > $(INTERNAL_BACON_PACKAGE).md5sum
+	@echo "Package Complete: $(INTERNAL_BACON_PACKAGE)" >&2
