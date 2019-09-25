@@ -1,13 +1,5 @@
 # Target-specific configuration
 
-# Populate the qcom hardware variants in the project pathmap.
-define wlan-set-path-variant
-$(call project-set-path-variant,wlan,TARGET_WLAN_VARIANT,hardware/qcom/$(1))
-endef
-define bt-vendor-set-path-variant
-$(call project-set-path-variant,bt-vendor,TARGET_BT_VENDOR_VARIANT,hardware/qcom/$(1))
-endef
-
 # Set device-specific HALs into project pathmap
 define set-device-specific-path
 $(if $(USE_DEVICE_SPECIFIC_$(1)), \
@@ -17,10 +9,6 @@ $(if $(USE_DEVICE_SPECIFIC_$(1)), \
     $(eval path := $(3))) \
 $(call project-set-path,qcom-$(2),$(strip $(path)))
 endef
-
-ifeq ($(TARGET_HW_DISK_ENCRYPTION),true)
-    TARGET_CRYPTFS_HW_PATH ?= vendor/qcom/opensource/cryptfs_hw
-endif
 
 ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
     BOARD_USES_QTI_HARDWARE := true
