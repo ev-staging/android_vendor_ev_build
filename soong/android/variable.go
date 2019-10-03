@@ -14,10 +14,6 @@ type Product_variables struct {
 		Cflags []string
 	}
 
-	Device_support_legacy_hwfde struct {
-		Cflags []string
-	}
-
 	Device_support_wait_for_qsee struct {
 		Cflags []string
 	}
