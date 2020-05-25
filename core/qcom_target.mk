@@ -90,20 +90,12 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
         QCOM_HARDWARE_VARIANT := msm8916
     else ifneq ($(filter $(UM_3_18_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8996
-        TARGET_USES_QCOM_UM_FAMILY := true
-        TARGET_USES_QCOM_UM_3_18_FAMILY := true
     else ifneq ($(filter $(UM_4_4_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := msm8998
-        TARGET_USES_QCOM_UM_FAMILY := true
-        TARGET_USES_QCOM_UM_4_4_FAMILY := true
     else ifneq ($(filter $(UM_4_9_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := sdm845
-        TARGET_USES_QCOM_UM_FAMILY := true
-        TARGET_USES_QCOM_UM_4_9_FAMILY := true
     else ifneq ($(filter $(UM_4_14_FAMILY),$(TARGET_BOARD_PLATFORM)),)
         QCOM_HARDWARE_VARIANT := sm8150
-        TARGET_USES_QCOM_UM_FAMILY := true
-        TARGET_USES_QCOM_UM_4_14_FAMILY := true
     else
         QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
     endif
@@ -119,8 +111,9 @@ $(call set-device-specific-path,THERMAL,thermal,hardware/qcom-caf/thermal)
 $(call set-device-specific-path,VR,vr,hardware/qcom-caf/vr)
 $(call set-device-specific-path,WLAN,wlan,hardware/qcom-caf/wlan)
 
-PRODUCT_SOONG_NAMESPACES += \
-    hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
+# Allow a device to opt-out hardset of PRODUCT_SOONG_NAMESPACES
+QCOM_SOONG_NAMESPACE ?= hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
+PRODUCT_SOONG_NAMESPACES += $(QCOM_SOONG_NAMESPACE)
 
 PRODUCT_CFI_INCLUDE_PATHS += \
     hardware/qcom-caf/wlan/qcwcn/wpa_supplicant_8_lib
