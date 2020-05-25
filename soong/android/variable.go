@@ -56,6 +56,11 @@ type Product_variables struct {
 		Cppflags []string
 	}
 
+	Target_surfaceflinger_fod_lib struct {
+		Cflags []string
+		Whole_static_libs []string
+	}
+
 	Uses_media_extensions struct {
 		Cflags []string
 	}
