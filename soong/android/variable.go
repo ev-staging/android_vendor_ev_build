@@ -84,6 +84,7 @@ type ProductVariables struct {
 	Additional_gralloc_10_usage_bits  *string `json:",omitempty"`
 	Device_support_hwfde  *bool `json:",omitempty"`
 	Device_support_hwfde_perf  *bool `json:",omitempty"`
+	Device_support_wait_for_qsee  *bool `json:",omitempty"`
 	Force_virtual_partitions  *bool `json:",omitempty"`
 	Has_legacy_camera_hal1  *bool `json:",omitempty"`
 	Has_legacy_mmap  *bool `json:",omitempty"`
