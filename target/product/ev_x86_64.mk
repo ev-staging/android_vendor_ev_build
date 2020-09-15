@@ -1,8 +1,4 @@
-<<<<<<< HEAD:target/product/ev_x86_64.mk
-# Copyright (C) 2018 The LineageOS Project
-=======
 # Copyright (C) 2018-2020 The LineageOS Project
->>>>>>> 9b0a82264e... lineage: Disable SDK addon for generic arm/arm64 targets:build/target/product/lineage_x86_64.mk
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
