@@ -1,4 +1,4 @@
-# Copyright (C) 2018 The LineageOS Project
+# Copyright (C) 2018-2020 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ $(call inherit-product, build/target/product/aosp_arm.mk)
 
 include $(SRC_EVERVOLV_DIR)/build/target/product/evervolv.mk
 
+TARGET_NO_KERNEL_OVERRIDE := true
 TARGET_USES_64_BIT_BINDER := true
 
 PRODUCT_NAME := ev_arm
