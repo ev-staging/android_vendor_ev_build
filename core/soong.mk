@@ -29,6 +29,7 @@ SOONG_CONFIG_NAMESPACES += evervolvGlobalVars
 SOONG_CONFIG_evervolvGlobalVars += \
     additional_gralloc_10_usage_bits \
     has_legacy_camera_hal1 \
+    has_memfd_backport \
     target_init_vendor_lib \
     target_ld_shim_libs \
     target_process_sdk_version_override \
@@ -50,6 +51,7 @@ endif
 
 # Set default values
 TARGET_HAS_LEGACY_CAMERA_HAL1 ?= false
+TARGET_HAS_MEMFD_BACKPORT ?= false
 TARGET_KEYMASTER_WAIT_FOR_QSEE ?= false
 TARGET_HW_DISK_ENCRYPTION ?= false
 TARGET_HW_DISK_ENCRYPTION_PERF ?= false
@@ -58,6 +60,7 @@ TARGET_USES_QTI_CAMERA_DEVICE ?= false
 
 # Soong bool variables
 SOONG_CONFIG_evervolvGlobalVars_has_legacy_camera_hal1 := $(TARGET_HAS_LEGACY_CAMERA_HAL1)
+SOONG_CONFIG_evervolvGlobalVars_has_memfd_backport := $(TARGET_HAS_MEMFD_BACKPORT)
 SOONG_CONFIG_evervolvQcomVars_device_support_wait_for_qsee := $(TARGET_KEYMASTER_WAIT_FOR_QSEE)
 SOONG_CONFIG_evervolvQcomVars_device_support_hw_fde := $(TARGET_HW_DISK_ENCRYPTION)
 SOONG_CONFIG_evervolvQcomVars_device_support_hw_fde_perf := $(TARGET_HW_DISK_ENCRYPTION_PERF)
