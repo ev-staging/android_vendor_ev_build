@@ -113,7 +113,9 @@ $(call set-device-specific-path,WLAN,wlan,hardware/qcom-caf/wlan)
 
 # Allow a device to opt-out hardset of PRODUCT_SOONG_NAMESPACES
 QCOM_SOONG_NAMESPACE ?= hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
-PRODUCT_SOONG_NAMESPACES += $(QCOM_SOONG_NAMESPACE)
+PRODUCT_SOONG_NAMESPACES += \
+    $(call project-path-for,qcom-data-ipa-cfg-mgr) \
+    $(QCOM_SOONG_NAMESPACE)
 
 PRODUCT_CFI_INCLUDE_PATHS += \
     hardware/qcom-caf/wlan/qcwcn/wpa_supplicant_8_lib
