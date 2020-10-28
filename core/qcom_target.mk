@@ -115,6 +115,7 @@ $(call set-device-specific-path,WLAN,wlan,hardware/qcom-caf/wlan)
 QCOM_SOONG_NAMESPACE ?= hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
 PRODUCT_SOONG_NAMESPACES += \
     $(call project-path-for,qcom-data-ipa-cfg-mgr) \
+    $(call project-path-for,qcom-dataservices) \
     $(QCOM_SOONG_NAMESPACE)
 
 PRODUCT_CFI_INCLUDE_PATHS += \
