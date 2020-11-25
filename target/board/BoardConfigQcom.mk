@@ -9,6 +9,10 @@ UM_4_9_FAMILY := sdm845 sdm710
 UM_4_14_FAMILY := msmnile sm6150
 UM_PLATFORMS := $(UM_3_18_FAMILY) $(UM_4_4_FAMILY) $(UM_4_9_FAMILY) $(UM_4_14_FAMILY)
 
+ifeq ($(BUILD_BROKEN_USES_BUILD_COPY_HEADERS),)
+BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
+endif
+
 BOARD_USES_ADRENO := true
 
 # UM platforms no longer need this set on O+
